@@ -1,5 +1,5 @@
 {
-  "name": "spotify-backend-intern-challenge",
+  "name": "shopify-backend-intern-challenge",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@prisma/client": "3.13.0",
     "next": "12.1.6",
     "react": "18.1.0",
     "react-dom": "18.1.0"
@@ -19,6 +20,7 @@
     "@types/react-dom": "18.0.3",
     "eslint": "8.15.0",
     "eslint-config-next": "12.1.6",
+    "prisma": "3.13.0",
     "typescript": "4.6.4"
   }
 }
