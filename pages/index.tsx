@@ -43,7 +43,7 @@ export default function Home({items}: Props) {
             // List items
             items?.map(item => (
               <div key={item.id} className={styles.itemContainer}>
-                <Link href="/">Edit</Link>
+                <Link href={`/items/edit/${item.id}`}>Edit</Link>
                 {item.name}, Quantity: {item.quantity}
               </div>
             ))
