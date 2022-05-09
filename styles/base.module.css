@@ -17,3 +17,7 @@
     text-decoration: underline;
     margin-right: 0.5rem;
 }
+
+.formLabel {
+    margin: 0.5rem 0;
+}

@@ -1,6 +1,6 @@
 import type {GetStaticPropsResult} from "next";
 import Head from "next/head";
-import styles from "../styles/Home.module.css";
+import styles from "@styles/base.module.css";
 import Link from "next/link";
 import {Item} from "@lib/types";
 import {getItems} from "@repo/items";
@@ -33,7 +33,7 @@ export default function Home({items}: Props) {
         <Link href="/">
           <a className={styles.createLink}>Create shipment</a>
         </Link>
-        <Link href="/">
+        <Link href="/items/new">
           <a className={styles.createLink}>Create item</a>
         </Link>
 
