@@ -28,7 +28,9 @@ export default function Home({items}: Props) {
       </Head>
 
       <main className={styles.main}>
-        <h1 className={styles.title}>Inventory Management</h1>
+        <Link href="/">
+          <h1 className={styles.titleLink}>Inventory Management</h1>
+        </Link>
 
         <Link href="/shipments/new">
           <a className={styles.createLink}>Create shipment</a>

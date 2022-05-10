@@ -2,6 +2,7 @@ import styles from "@styles/base.module.css";
 import {FormEvent, useState} from "react";
 import {createItem} from "@repo/api/items";
 import {useRouter} from "next/router";
+import Link from "next/link";
 
 export default function NewItemPage() {
   const router = useRouter();
@@ -24,7 +25,9 @@ export default function NewItemPage() {
 
   return (
     <div className={styles.container}>
-      <h1>Inventory Management</h1>
+      <Link href="/">
+        <h1 className={styles.titleLink}>Inventory Management</h1>
+      </Link>
       <h2>Create Item</h2>
       <form onSubmit={onSubmit}>
         <div>

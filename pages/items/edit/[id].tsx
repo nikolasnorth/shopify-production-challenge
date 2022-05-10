@@ -5,6 +5,7 @@ import {editItem, getItemById} from "@repo/api/items";
 import {useRouter} from "next/router";
 import {ParsedUrlQuery} from "querystring";
 import styles from "@styles/base.module.css";
+import Link from "next/link";
 
 interface Props {
   item: Item;
@@ -60,7 +61,9 @@ export default function EditItem(props: Props) {
 
   return (
     <div className={styles.container}>
-      <h1>Inventory Management</h1>
+      <Link href="/">
+        <h1 className={styles.titleLink}>Inventory Management</h1>
+      </Link>
       <h2>Edit Item</h2>
       <form onSubmit={onSubmitEditItem}>
         <div>

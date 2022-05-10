@@ -5,6 +5,7 @@ import {Item} from "@lib/types";
 import {useState} from "react";
 import {useRouter} from "next/router";
 import {createShipment} from "@repo/api/shipments";
+import Link from "next/link";
 
 interface Props {
   items: Item[];
@@ -99,7 +100,9 @@ export default function NewShipmentPage(props: Props) {
 
   return (
     <div className={styles.container}>
-      <h1>Inventory Management</h1>
+      <Link href="/">
+        <h1 className={styles.titleLink}>Inventory Management</h1>
+      </Link>
       <h2>Create Shipment</h2>
       <div className={styles.createShipment}>
         <div className={styles.availableItems}>

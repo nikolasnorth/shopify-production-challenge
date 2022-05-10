@@ -2,6 +2,11 @@
     padding: 0 2rem;
 }
 
+.titleLink:hover {
+    text-decoration: underline;
+    cursor: pointer;
+}
+
 .createLink {
     font-weight: bold;
     text-decoration: underline;
