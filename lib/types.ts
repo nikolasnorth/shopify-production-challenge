@@ -3,3 +3,7 @@ export interface Item {
   name: string;
   quantity: number;
 }
+
+export interface Shipment {
+  id: number;
+}

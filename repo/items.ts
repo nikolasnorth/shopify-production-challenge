@@ -12,12 +12,11 @@ export async function getItemById(id: number): Promise<Item> {
 
 // Queries API to retrieve a list of items.
 export async function getItems(): Promise<Item[]> {
-  const items: Item[] = Array.of(
+  return Array.of(
     {id: 1, name: "Running shoes", quantity: 10},
     {id: 2, name: "Umbrella", quantity: 7},
     {id: 3, name: "iPhone", quantity: 13},
   );
-  return Promise.resolve(items);
 }
 
 // Queries API to create a new item. Returns null if request was unsuccessful.

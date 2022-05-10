@@ -21,3 +21,15 @@
 .formLabel {
     margin: 0.5rem 0;
 }
+
+.createShipment {
+    display: flex;
+}
+
+.availableItems {
+    width: 45%;
+}
+
+.shippingItems {
+    width: 45%;
+}
