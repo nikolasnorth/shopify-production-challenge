@@ -1,10 +1,10 @@
 import styles from "@styles/base.module.css";
 import {GetServerSidePropsResult} from "next";
-import {getItems} from "@repo/items";
+import {getItems} from "@repo/api/items";
 import {Item} from "@lib/types";
 import {useState} from "react";
 import {useRouter} from "next/router";
-import {createShipment} from "@repo/shipments";
+import {createShipment} from "@repo/api/shipments";
 
 interface Props {
   items: Item[];

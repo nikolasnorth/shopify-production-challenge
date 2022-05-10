@@ -1,6 +1,6 @@
 import styles from "@styles/base.module.css";
 import {FormEvent, useState} from "react";
-import {createItem} from "@repo/items";
+import {createItem} from "@repo/api/items";
 import {useRouter} from "next/router";
 
 export default function NewItemPage() {

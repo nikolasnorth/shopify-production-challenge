@@ -3,7 +3,7 @@ import Head from "next/head";
 import styles from "@styles/base.module.css";
 import Link from "next/link";
 import {Item} from "@lib/types";
-import {getItems} from "@repo/items";
+import {getItems} from "@repo/api/items";
 
 interface Props {
   items?: Item[],

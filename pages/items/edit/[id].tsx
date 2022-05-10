@@ -1,7 +1,7 @@
 import {GetServerSidePropsContext, GetServerSidePropsResult} from "next";
 import {Item} from "@lib/types";
 import {FormEvent, useState} from "react";
-import {editItem, getItemById} from "@repo/items";
+import {editItem, getItemById} from "@repo/api/items";
 import {useRouter} from "next/router";
 import {ParsedUrlQuery} from "querystring";
 import styles from "@styles/base.module.css";
