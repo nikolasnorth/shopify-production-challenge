@@ -6,5 +6,5 @@ export async function createShipment(items: Item[]): Promise<Shipment | null> {
   const max = 1000;
   // Random number between [min, max)
   const id = Math.floor(Math.random() * (max - min) + min);
-  return {id: id};
+  return {id: id, items: items};
 }

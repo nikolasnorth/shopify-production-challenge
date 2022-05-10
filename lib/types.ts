@@ -6,4 +6,5 @@ export interface Item {
 
 export interface Shipment {
   id: number;
+  items: Item[];
 }
