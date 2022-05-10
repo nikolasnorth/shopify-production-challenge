@@ -1,7 +1,7 @@
 import {GetServerSidePropsContext, GetServerSidePropsResult} from "next";
 import {Item} from "@lib/types";
 import {FormEvent, useState} from "react";
-import {editItem, getItemById} from "@repo/api/items";
+import {deleteItemById, editItem, getItemById} from "@repo/api/items";
 import {useRouter} from "next/router";
 import {ParsedUrlQuery} from "querystring";
 import styles from "@styles/base.module.css";
@@ -59,6 +59,15 @@ export default function EditItem(props: Props) {
     await router.push("/");
   }
 
+  async function onClickDeleteItem() {
+    const isDeleted = await deleteItemById(props.item.id);
+    if (!isDeleted) {
+      alert("Oops! We could not delete the item at this time. Please try again later.");
+    } else {
+      await router.push("/");
+    }
+  }
+
   return (
     <div className={styles.container}>
       <Link href="/">
@@ -79,7 +88,7 @@ export default function EditItem(props: Props) {
         <input type="submit" value="Edit"/>
         <input type="reset" value="Cancel" onClick={_ => router.push("/")}/>
       </form>
-      <button>Delete item</button>
+      <button onClick={() => onClickDeleteItem()}>Delete item</button>
       <br/>
       <small>
         *Delete item removes the item from the database. If you wish to set the quantity to zero, do so in the above

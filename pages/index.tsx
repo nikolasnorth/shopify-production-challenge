@@ -1,4 +1,4 @@
-import type {GetStaticPropsResult} from "next";
+import type {GetServerSidePropsResult} from "next";
 import Head from "next/head";
 import styles from "@styles/base.module.css";
 import Link from "next/link";
@@ -6,10 +6,10 @@ import {Item} from "@lib/types";
 import {getItems} from "@repo/api/items";
 
 interface Props {
-  items?: Item[],
+  items: Item[],
 }
 
-export async function getStaticProps(): Promise<GetStaticPropsResult<Props>> {
+export async function getServerSideProps(): Promise<GetServerSidePropsResult<Props>> {
   const items = await getItems();
   return {
     props: {
@@ -43,7 +43,7 @@ export default function Home({items}: Props) {
         <div>
           {
             // List items
-            items?.map(item => (
+            items.map(item => (
               <div key={item.id} className={styles.itemContainer}>
                 <Link href={`/items/edit/${item.id}`}>Edit</Link>
                 {item.name}, Quantity: {item.quantity}

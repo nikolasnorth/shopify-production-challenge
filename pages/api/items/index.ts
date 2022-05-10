@@ -24,9 +24,8 @@ export default function IndexHandler(req: NextApiRequest, res: NextApiResponse<R
         error: "Item name and quantity are required.",
       });
     }
-    const min = 1;
-    const max = 1000;
     // Random number between [min, max)
+    const min = 1, max = 1000;
     const id = Math.floor(Math.random() * (max - min) + min);
     const item = {
       id: id,
