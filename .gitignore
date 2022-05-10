@@ -36,3 +36,11 @@ yarn-error.log*
 
 # IDE
 .idea/
+
+# Db
+prisma/migrations/
+prisma/dev.db
+prisma/seed.js
+
+# Env
+.env
