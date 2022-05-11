@@ -1,12 +1,13 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import { Shipment } from "@lib/types";
+import { dbInsertShipment } from "@repo/db/shipments";
 
 interface ResponseData {
-  shipment?: Shipment;
+  shipment?: Pick<Shipment, "id">;
   error?: string;
 }
 
-export default function IndexHandler(req: NextApiRequest, res: NextApiResponse<ResponseData>) {
+export default async function IndexHandler(req: NextApiRequest, res: NextApiResponse<ResponseData>) {
   if (req.method == "POST") {
     const { items }: Pick<Shipment, "items"> = req.body;
     if (!items || items.length == 0) {
@@ -14,8 +15,15 @@ export default function IndexHandler(req: NextApiRequest, res: NextApiResponse<R
         error: "At least one item is required.",
       });
     }
-    const shipment: Shipment = { id: 100, items: items };
-    return res.status(201).json({ shipment: shipment });
+    const result = await dbInsertShipment(items);
+    if (!result) {
+      return res.status(500).json({
+        error: "Something went wrong.",
+      });
+    }
+    return res.status(201).json({
+      shipment: { id: result.id },
+    });
   }
 
   return res.status(405).end();

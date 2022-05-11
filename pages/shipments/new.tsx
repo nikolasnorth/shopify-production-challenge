@@ -4,7 +4,7 @@ import { apiGetItems } from "@repo/api/items";
 import { Item } from "@lib/types";
 import { useState } from "react";
 import { useRouter } from "next/router";
-import { createShipment } from "@repo/api/shipments";
+import { apiCreateShipment } from "@repo/api/shipments";
 import Link from "next/link";
 
 interface Props {
@@ -91,7 +91,7 @@ export default function NewShipmentPage(props: Props) {
       alert("Shipment items cart is empty.");
       return;
     }
-    const shipment = await createShipment(shippingItems);
+    const shipment = await apiCreateShipment(shippingItems);
     if (!shipment) {
       alert("Oops! We could not create the shipment at this time. Please try again later.");
     }

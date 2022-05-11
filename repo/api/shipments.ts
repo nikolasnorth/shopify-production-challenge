@@ -1,8 +1,11 @@
 import { Item, Shipment } from "@lib/types";
+import { config } from "@lib/config";
+
+const BASE_URL = config.BASE_URL;
 
 // Queries API to create a new shipment of the given items. Returns null if the request was unsuccessful.
-export async function createShipment(items: Item[]): Promise<Shipment | null> {
-  const res = await fetch(`${process.env.URL}/api/shipments`, {
+export async function apiCreateShipment(items: Item[]): Promise<Pick<Shipment, "id"> | null> {
+  const res = await fetch(`${BASE_URL}/api/shipments`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
