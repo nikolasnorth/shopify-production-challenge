@@ -39,7 +39,6 @@ yarn-error.log*
 
 # Db
 prisma/dev.db
-prisma/seed.js
 prisma/dev.db-journal
 
 # Env
