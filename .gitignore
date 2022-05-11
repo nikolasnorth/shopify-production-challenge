@@ -38,9 +38,9 @@ yarn-error.log*
 .idea/
 
 # Db
-prisma/migrations/
 prisma/dev.db
 prisma/seed.js
+prisma/dev.db-journal
 
 # Env
 .env
