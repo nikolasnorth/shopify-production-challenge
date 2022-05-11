@@ -1,4 +1,4 @@
-import {Item} from "@lib/types";
+import { Item } from "@lib/types";
 
 // Queries API to retrieve an item with the given id. Returns null if the item does not exist or the request was
 // unsuccessful.
@@ -7,7 +7,7 @@ export async function getItemById(id: number): Promise<Item | null> {
   if (!res.ok) {
     return null;
   }
-  const {item} = await res.json();
+  const { item } = await res.json();
   return item;
 }
 
@@ -17,7 +17,7 @@ export async function getItems(): Promise<Item[]> {
   if (!res.ok) {
     return [];
   }
-  const {items} = await res.json();
+  const { items } = await res.json();
   return items;
 }
 
@@ -33,7 +33,7 @@ export async function createItem(item: Pick<Item, "name" | "quantity">): Promise
   if (!res.ok) {
     return null;
   }
-  const {item: createdItem} = await res.json();
+  const { item: createdItem } = await res.json();
   return createdItem;
 }
 
@@ -49,13 +49,13 @@ export async function editItem(item: Item): Promise<Item | null> {
   if (!res.ok) {
     return null;
   }
-  const {item: updatedItem} = await res.json();
+  const { item: updatedItem } = await res.json();
   return updatedItem;
 }
 
 // Queries API to delete the item with the given id. Returns true if the item was successfully deleted, otherwise
 // returns false.
 export async function deleteItemById(id: number): Promise<boolean> {
-  const res = await fetch(`${process.env.URL}/api/items/${id}`, {method: "DELETE"});
+  const res = await fetch(`${process.env.URL}/api/items/${id}`, { method: "DELETE" });
   return res.ok;
 }

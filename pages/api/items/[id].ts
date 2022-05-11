@@ -1,6 +1,6 @@
-import {NextApiRequest, NextApiResponse} from "next";
-import {Item} from "@lib/types";
-import {dbSelectItemWithId, dbUpdateItem} from "@repo/db/items";
+import { NextApiRequest, NextApiResponse } from "next";
+import { Item } from "@lib/types";
+import { dbSelectItemWithId, dbUpdateItem } from "@repo/db/items";
 
 interface ResponseData {
   item?: Item;
@@ -29,13 +29,13 @@ export default async function ItemIdHandler(req: NextApiRequest, res: NextApiRes
   }
 
   if (req.method == "PUT") {
-    const {name, quantity}: Partial<Item> = req.body;
+    const { name, quantity }: Partial<Item> = req.body;
     if (!name && !quantity) {
       return res.status(400).json({
         error: "At least one of item name or quantity are required.",
       });
     }
-    const item = await dbUpdateItem({id, name, quantity});
+    const item = await dbUpdateItem({ id, name, quantity });
     return res.status(200).json({
       item: item,
     });

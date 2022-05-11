@@ -1,4 +1,4 @@
-import {Item, Shipment} from "@lib/types";
+import { Item, Shipment } from "@lib/types";
 
 // Queries API to create a new shipment of the given items. Returns null if the request was unsuccessful.
 export async function createShipment(items: Item[]): Promise<Shipment | null> {
@@ -7,11 +7,11 @@ export async function createShipment(items: Item[]): Promise<Shipment | null> {
     headers: {
       "Content-Type": "application/json",
     },
-    body: JSON.stringify({items: items}),
+    body: JSON.stringify({ items: items }),
   });
   if (!res.ok) {
     return null;
   }
-  const {shipment} = await res.json();
+  const { shipment } = await res.json();
   return shipment;
 }

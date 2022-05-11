@@ -1,9 +1,9 @@
-import type {GetServerSidePropsResult} from "next";
+import type { GetServerSidePropsResult } from "next";
 import Head from "next/head";
 import styles from "@styles/base.module.css";
 import Link from "next/link";
-import {Item} from "@lib/types";
-import {getItems} from "@repo/api/items";
+import { Item } from "@lib/types";
+import { getItems } from "@repo/api/items";
 
 interface Props {
   items: Item[],
@@ -18,7 +18,7 @@ export async function getServerSideProps(): Promise<GetServerSidePropsResult<Pro
   };
 }
 
-export default function Home({items}: Props) {
+export default function Home({ items }: Props) {
   return (
     <div className={styles.container}>
       <Head>

@@ -1,10 +1,10 @@
 import styles from "@styles/base.module.css";
-import {GetServerSidePropsResult} from "next";
-import {getItems} from "@repo/api/items";
-import {Item} from "@lib/types";
-import {useState} from "react";
-import {useRouter} from "next/router";
-import {createShipment} from "@repo/api/shipments";
+import { GetServerSidePropsResult } from "next";
+import { getItems } from "@repo/api/items";
+import { Item } from "@lib/types";
+import { useState } from "react";
+import { useRouter } from "next/router";
+import { createShipment } from "@repo/api/shipments";
 import Link from "next/link";
 
 interface Props {
@@ -41,7 +41,7 @@ export default function NewShipmentPage(props: Props) {
 
     // Add item to shipment
     if (i == -1) {
-      updatedShippingItems.push({id: item.id, name: item.name, quantity: 1});
+      updatedShippingItems.push({ id: item.id, name: item.name, quantity: 1 });
     } else {
       updatedShippingItems[i].quantity += 1;
     }
@@ -71,7 +71,7 @@ export default function NewShipmentPage(props: Props) {
 
     // Remove item from shipment
     if (j == -1) {
-      updatedAvailableItems.push({id: item.id, name: item.name, quantity: 1});
+      updatedAvailableItems.push({ id: item.id, name: item.name, quantity: 1 });
     } else {
       updatedAvailableItems[j].quantity += 1;
     }
