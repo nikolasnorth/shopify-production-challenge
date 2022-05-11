@@ -1,7 +1,7 @@
 import { Item } from "../../lib/types";
 import { config } from "../../lib/config";
 
-const BASE_URL = config.BASE_URL;
+const BASE_URL = process.env.NODE_ENV == "production" ? config.PROD_BASE_URL : config.DEV_BASE_URL;
 
 // Queries API to retrieve an item with the given id. Returns null if the item does not exist or the request was
 // unsuccessful.
