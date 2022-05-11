@@ -1,10 +1,10 @@
 import { config } from "../../lib/config";
-import { Item } from "../../lib/types";
+import { HttpRequestFail, Item, Result, Shipment } from "../../lib/types";
 
 const BASE_URL = process.env.NODE_ENV == "production" ? config.PROD_BASE_URL : config.DEV_BASE_URL;
 
 // Queries API to create a new shipment of the given items. Returns null if the request was unsuccessful.
-export async function apiCreateShipment(items: Item[]): Promise<number | null> {
+export async function apiCreateShipment(items: Item[]): Promise<Result<number>> {
   const res = await fetch(`${BASE_URL}/api/shipments`, {
     method: "POST",
     headers: {
@@ -13,11 +13,23 @@ export async function apiCreateShipment(items: Item[]): Promise<number | null> {
     body: JSON.stringify({ items: items }),
   });
   if (!res.ok) {
-    return null;
+    const { error }: { error?: string } = await res.json();
+    if (error) {
+      return {
+        ok: false,
+        error: new HttpRequestFail(`Could not request API to create a new shipment. Error: ${error}`),
+      };
+    }
+    return { ok: false, error: new HttpRequestFail("Could not request API to create a new shipment.") };
   }
-  const { shipment } = await res.json();
+
+  const { shipment }: { shipment?: Pick<Shipment, "id"> } = await res.json();
   if (!shipment?.id) {
-    return null;
+    return {
+      ok: false,
+      error: new HttpRequestFail("Successfully created a new shipment, however response did not include the id."),
+    };
   }
-  return shipment.id;
+
+  return { ok: true, value: shipment.id };
 }

@@ -7,7 +7,7 @@ const BASE_URL = process.env.NODE_ENV == "production" ? config.PROD_BASE_URL : c
 export async function apiGetItemById(id: number): Promise<Result<Item>> {
   const res = await fetch(`${BASE_URL}/api/items/${id}`);
   if (!res.ok) {
-    const { error }: { error: string } = await res.json();
+    const { error }: { error?: string } = await res.json();
     if (error) {
       return { ok: false, error: new HttpRequestFail(error) };
     }
@@ -38,7 +38,7 @@ export async function apiCreateItem(item: Pick<Item, "name" | "quantity">): Prom
     body: JSON.stringify(item),
   });
   if (!res.ok) {
-    const { error }: { error: string } = await res.json();
+    const { error }: { error?: string } = await res.json();
     if (error) {
       return { ok: false, error: new HttpRequestFail(error) };
     }
@@ -59,7 +59,7 @@ export async function apiEditItem(item: Item): Promise<Result<Item>> {
     body: JSON.stringify(item),
   });
   if (!res.ok) {
-    const { error }: { error: string } = await res.json();
+    const { error }: { error?: string } = await res.json();
     if (error) {
       return { ok: false, error: new HttpRequestFail(error) };
     }

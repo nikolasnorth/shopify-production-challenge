@@ -87,15 +87,17 @@ export default function NewShipmentPage(props: Props) {
 
   async function processShipment() {
     if (shippingItems.length == 0) {
-      alert("Shipment items cart is empty.");
+      alert("Shipment must contain at least one item.");
       return;
     }
-    const shipmentId = await apiCreateShipment(shippingItems);
-    if (!shipmentId) {
-      alert("Oops! We could not create the shipment at this time. Please try again later.");
+
+    const result = await apiCreateShipment(shippingItems);
+    if (!result.ok) {
+      alert(`Oops! Something went wrong. Error: ${result.error.message}`);
       return;
     }
-    await router.push("/");
+
+    router.push("/");
   }
 
   return (
