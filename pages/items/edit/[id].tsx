@@ -18,24 +18,19 @@ interface UrlQueryProps extends ParsedUrlQuery {
 export async function getServerSideProps(context: GetServerSidePropsContext<UrlQueryProps>): Promise<GetServerSidePropsResult<Props>> {
   const notFound = {
     notFound: true,
-    redirect: {
-      destination: "/",
-      permanent: false,
-    },
+    redirect: { destination: "/", permanent: false },
   };
   if (!context.params?.id) {
     return notFound;
   }
   const id = Number(context.params.id);
-  const item = await apiGetItemById(id);
-  if (!item) {
+
+  const result = await apiGetItemById(id);
+  if (!result.ok) {
     return notFound;
   }
-  return {
-    props: {
-      item: item,
-    },
-  };
+
+  return { props: { item: result.value } };
 }
 
 export default function EditItem(props: Props) {
@@ -51,12 +46,15 @@ export default function EditItem(props: Props) {
     if (itemQuantity && itemQuantity != props.item.quantity) {
       props.item.quantity = itemQuantity;
     }
-    const item = await apiEditItem(props.item);
-    if (!item) {
-      alert("Oops! Something went wrong. Please try again later.");
+
+    const result = await apiEditItem(props.item);
+    if (!result.ok) {
+      console.log(result.error);
+      alert(`Oops! Something went wrong. Error: ${result.error.message}`);
       return;
     }
-    await router.push("/");
+
+    router.push("/");
   }
 
   async function onClickDeleteItem() {
@@ -64,7 +62,7 @@ export default function EditItem(props: Props) {
     if (!isDeleted) {
       alert("Oops! We could not delete the item at this time. Please try again later.");
     } else {
-      await router.push("/");
+      router.push("/");
     }
   }
 

@@ -44,6 +44,14 @@ export class InternalServerError implements CustomError {
   }
 }
 
+export class HttpRequestFail implements CustomError {
+  message: string;
+
+  constructor(message?: string) {
+    this.message = message || "HTTP request fail.";
+  }
+}
+
 // Wrapper type for a successful value.
 type Ok<T> = {
   ok: true;
