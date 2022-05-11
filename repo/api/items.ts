@@ -1,5 +1,5 @@
-import { Item } from "@lib/types";
-import { config } from "@lib/config";
+import { Item } from "../../lib/types";
+import { config } from "../../lib/config";
 
 const BASE_URL = config.BASE_URL;
 

@@ -1,6 +1,6 @@
 import { NextApiRequest, NextApiResponse } from "next";
-import { Shipment } from "@lib/types";
-import { dbInsertShipment } from "@repo/db/shipments";
+import { Shipment } from "../../../lib/types";
+import { dbInsertShipment } from "../../../repo/db/shipments";
 
 interface ResponseData {
   shipment?: Pick<Shipment, "id">;

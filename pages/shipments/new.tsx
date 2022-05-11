@@ -1,11 +1,11 @@
-import styles from "@styles/base.module.css";
+import styles from "../../styles/base.module.css";
 import { GetServerSidePropsResult } from "next";
-import { apiGetItems } from "@repo/api/items";
-import { Item } from "@lib/types";
 import { useState } from "react";
 import { useRouter } from "next/router";
-import { apiCreateShipment } from "@repo/api/shipments";
 import Link from "next/link";
+import { apiGetItems } from "../../repo/api/items";
+import { Item } from "../../lib/types";
+import { apiCreateShipment } from "../../repo/api/shipments";
 
 interface Props {
   items: Item[];

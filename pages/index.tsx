@@ -1,9 +1,9 @@
 import type { GetServerSidePropsResult } from "next";
 import Head from "next/head";
-import styles from "@styles/base.module.css";
+import styles from "../styles/base.module.css";
 import Link from "next/link";
-import { Item } from "@lib/types";
-import { apiGetItems } from "@repo/api/items";
+import { Item } from "../lib/types";
+import { apiGetItems } from "../repo/api/items";
 
 interface Props {
   items: Item[],

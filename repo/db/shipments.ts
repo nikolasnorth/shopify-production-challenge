@@ -1,6 +1,6 @@
-import { Item, Shipment } from "@lib/types";
-import { client } from "@repo/db/client";
+import { client } from "./client";
 import { Prisma } from "@prisma/client";
+import { Item, Shipment } from "../../lib/types";
 
 // Inserts a new shipment with the given items into the database. Returns null if the operation was unsuccessful.
 export async function dbInsertShipment(items: Item[]): Promise<Pick<Shipment, "id"> | undefined> {

@@ -1,6 +1,6 @@
 import { NextApiRequest, NextApiResponse } from "next";
-import { Item } from "@lib/types";
-import { dbInsertItem, dbSelectAllItems } from "@repo/db/items";
+import { Item } from "../../../lib/types";
+import { dbInsertItem, dbSelectAllItems } from "../../../repo/db/items";
 
 interface ResponseData {
   item?: Item;

@@ -1,8 +1,8 @@
-import styles from "@styles/base.module.css";
+import styles from "../../styles/base.module.css";
 import { FormEvent, useState } from "react";
-import { apiCreateItem } from "@repo/api/items";
 import { useRouter } from "next/router";
 import Link from "next/link";
+import { apiCreateItem } from "../../repo/api/items";
 
 export default function NewItemPage() {
   const router = useRouter();

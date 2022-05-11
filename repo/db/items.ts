@@ -1,5 +1,5 @@
-import { client } from "@repo/db/client";
-import { Item } from "@lib/types";
+import { client } from "./client";
+import { Item } from "../../lib/types";
 
 // Selects all items from the database.
 export async function dbSelectAllItems(): Promise<Item[]> {
@@ -31,7 +31,7 @@ export async function dbUpdateItem(item: Partial<Item>): Promise<Item> {
 export async function dbDeleteItemWithId(id: number): Promise<boolean> {
   try {
     await client.item.delete({
-      where: { id: id }
+      where: { id: id },
     });
     return true;
   } catch (e) {
