@@ -1,6 +1,6 @@
 import styles from "@styles/base.module.css";
 import { GetServerSidePropsResult } from "next";
-import { getItems } from "@repo/api/items";
+import { apiGetItems } from "@repo/api/items";
 import { Item } from "@lib/types";
 import { useState } from "react";
 import { useRouter } from "next/router";
@@ -12,7 +12,7 @@ interface Props {
 }
 
 export async function getServerSideProps(): Promise<GetServerSidePropsResult<Props>> {
-  const items = await getItems();
+  const items = await apiGetItems();
   return {
     props: {
       items: items,

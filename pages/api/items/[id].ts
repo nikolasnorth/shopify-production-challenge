@@ -1,6 +1,6 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import { Item } from "@lib/types";
-import { dbSelectItemWithId, dbUpdateItem } from "@repo/db/items";
+import { dbDeleteItemWithId, dbSelectItemWithId, dbUpdateItem } from "@repo/db/items";
 
 interface ResponseData {
   item?: Item;
@@ -42,6 +42,10 @@ export default async function ItemIdHandler(req: NextApiRequest, res: NextApiRes
   }
 
   if (req.method == "DELETE") {
+    const isDeleted = await dbDeleteItemWithId(id);
+    if (!isDeleted) {
+      return res.status(400).end();
+    }
     return res.status(204).end();
   }
 

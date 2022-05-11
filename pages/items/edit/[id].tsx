@@ -1,7 +1,7 @@
 import { GetServerSidePropsContext, GetServerSidePropsResult } from "next";
 import { Item } from "@lib/types";
 import { FormEvent, useState } from "react";
-import { deleteItemById, editItem, getItemById } from "@repo/api/items";
+import { apiDeleteItemById, apiEditItem, apiGetItemById } from "@repo/api/items";
 import { useRouter } from "next/router";
 import { ParsedUrlQuery } from "querystring";
 import styles from "@styles/base.module.css";
@@ -27,7 +27,7 @@ export async function getServerSideProps(context: GetServerSidePropsContext<UrlQ
     return notFound;
   }
   const id = Number(context.params.id);
-  const item = await getItemById(id);
+  const item = await apiGetItemById(id);
   if (!item) {
     return notFound;
   }
@@ -51,7 +51,7 @@ export default function EditItem(props: Props) {
     if (itemQuantity && itemQuantity != props.item.quantity) {
       props.item.quantity = itemQuantity;
     }
-    const item = await editItem(props.item);
+    const item = await apiEditItem(props.item);
     if (!item) {
       alert("Oops! Something went wrong. Please try again later.");
       return;
@@ -60,7 +60,7 @@ export default function EditItem(props: Props) {
   }
 
   async function onClickDeleteItem() {
-    const isDeleted = await deleteItemById(props.item.id);
+    const isDeleted = await apiDeleteItemById(props.item.id);
     if (!isDeleted) {
       alert("Oops! We could not delete the item at this time. Please try again later.");
     } else {

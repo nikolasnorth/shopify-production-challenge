@@ -1,6 +1,6 @@
 import styles from "@styles/base.module.css";
 import { FormEvent, useState } from "react";
-import { createItem } from "@repo/api/items";
+import { apiCreateItem } from "@repo/api/items";
 import { useRouter } from "next/router";
 import Link from "next/link";
 
@@ -15,7 +15,7 @@ export default function NewItemPage() {
       alert("Item name is required.");
       return;
     }
-    const item = await createItem({ name: itemName, quantity: itemQuantity });
+    const item = await apiCreateItem({ name: itemName, quantity: itemQuantity });
     if (!item) {
       alert("Oops! Something went wrong. Please try again.");
       return;

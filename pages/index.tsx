@@ -3,14 +3,14 @@ import Head from "next/head";
 import styles from "@styles/base.module.css";
 import Link from "next/link";
 import { Item } from "@lib/types";
-import { getItems } from "@repo/api/items";
+import { apiGetItems } from "@repo/api/items";
 
 interface Props {
   items: Item[],
 }
 
 export async function getServerSideProps(): Promise<GetServerSidePropsResult<Props>> {
-  const items = await getItems();
+  const items = await apiGetItems();
   return {
     props: {
       items: items,
