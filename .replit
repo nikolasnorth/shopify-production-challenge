@@ -1,0 +1,16 @@
+language = "node"
+
+# Install application dependencies
+run = "npm install"
+
+# Create SQLite database
+run = "npx prisma migrate dev"
+
+# Seed SQLite database
+run = "npx prisma db seed"
+
+# Build Next.js application
+run = "npm run build"
+
+# Launch Next.js application
+run = "npm run start"
