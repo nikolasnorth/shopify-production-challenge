@@ -1,10 +1,10 @@
 import { config } from "../../lib/config";
-import { Item, Shipment } from "../../lib/types";
+import { Item } from "../../lib/types";
 
 const BASE_URL = config.BASE_URL;
 
 // Queries API to create a new shipment of the given items. Returns null if the request was unsuccessful.
-export async function apiCreateShipment(items: Item[]): Promise<Pick<Shipment, "id"> | null> {
+export async function apiCreateShipment(items: Item[]): Promise<number | null> {
   const res = await fetch(`${BASE_URL}/api/shipments`, {
     method: "POST",
     headers: {
@@ -16,5 +16,8 @@ export async function apiCreateShipment(items: Item[]): Promise<Pick<Shipment, "
     return null;
   }
   const { shipment } = await res.json();
-  return shipment;
+  if (!shipment?.id) {
+    return null;
+  }
+  return shipment.id;
 }

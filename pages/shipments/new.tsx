@@ -91,9 +91,10 @@ export default function NewShipmentPage(props: Props) {
       alert("Shipment items cart is empty.");
       return;
     }
-    const shipment = await apiCreateShipment(shippingItems);
-    if (!shipment) {
+    const shipmentId = await apiCreateShipment(shippingItems);
+    if (!shipmentId) {
       alert("Oops! We could not create the shipment at this time. Please try again later.");
+      return;
     }
     await router.push("/");
   }
