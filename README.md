@@ -1,5 +1,13 @@
 # Shopify Backend Intern Challenge
 
+## Functional Requirements
+
+- [x] Create inventory items.
+- [x] Edit inventory items.
+- [x] Delete inventory items.
+- [x] View a list of inventory items.
+- [x] Ability to create “shipments” and assign inventory to the shipment, and adjust inventory appropriately.
+
 ## Getting Started
 
 First, run the development server:
