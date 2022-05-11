@@ -24,7 +24,7 @@ export class NotFoundError implements CustomError {
   message: string;
 
   constructor(message?: string) {
-    this.message = message || "Item not found.";
+    this.message = message || "Not found.";
   }
 }
 
