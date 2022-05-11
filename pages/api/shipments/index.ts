@@ -1,5 +1,5 @@
 import { NextApiRequest, NextApiResponse } from "next";
-import { Shipment } from "../../../lib/types";
+import { NotFoundError, Shipment } from "../../../lib/types";
 import { dbInsertShipment } from "../../../repo/db/shipments";
 
 interface ResponseData {
@@ -11,18 +11,20 @@ export default async function IndexHandler(req: NextApiRequest, res: NextApiResp
   if (req.method == "POST") {
     const { items }: Pick<Shipment, "items"> = req.body;
     if (!items || items.length == 0) {
-      return res.status(400).json({
-        error: "At least one item is required.",
-      });
+      return res.status(400).json({ error: "At least one shipment item is required." });
     }
+
     const result = await dbInsertShipment(items);
-    if (!result) {
-      return res.status(500).json({
-        error: "Something went wrong.",
-      });
+    if (!result.ok && result.error instanceof NotFoundError) {
+      return res.status(404).json({ error: result.error.message });
     }
+    if (!result.ok) {
+      return res.status(500).end();
+    }
+
+    const { value: shipmentId } = result;
     return res.status(201).json({
-      shipment: { id: result.id },
+      shipment: { id: shipmentId },
     });
   }
 

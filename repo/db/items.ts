@@ -1,5 +1,6 @@
 import { client } from "./client";
-import { Item } from "../../lib/types";
+import { InternalServerError, Item, NotFoundError, Result } from "../../lib/types";
+import { Prisma } from "@prisma/client";
 
 // Selects all items from the database.
 export async function dbSelectAllItems(): Promise<Item[]> {
@@ -7,10 +8,14 @@ export async function dbSelectAllItems(): Promise<Item[]> {
 }
 
 // Selects an item with the given id from the database.
-export async function dbSelectItemWithId(id: number): Promise<Item | null> {
-  return await client.item.findUnique({
+export async function dbSelectItemWithId(id: number): Promise<Result<Item>> {
+  const item = await client.item.findUnique({
     where: { id: id },
   });
+  if (!item) {
+    return { ok: false, error: new NotFoundError() };
+  }
+  return { ok: true, value: item };
 }
 
 // Inserts the given item into the database.
@@ -19,22 +24,34 @@ export async function dbInsertItem(item: Pick<Item, "name" | "quantity">): Promi
 }
 
 // Updates the given item in the database.
-export async function dbUpdateItem(item: Partial<Item>): Promise<Item> {
-  const { id, name, quantity } = item;
-  return client.item.update({
-    where: { id: id },
-    data: { name, quantity },
-  });
+export async function dbUpdateItem(item: Partial<Item>): Promise<Result<Item>> {
+  try {
+    const { id, name, quantity } = item;
+    const updatedItem = await client.item.update({
+      where: { id: id },
+      data: { name, quantity },
+    });
+    return { ok: true, value: updatedItem };
+  } catch (e) {
+    if (e instanceof Prisma.PrismaClientKnownRequestError) {
+      return { ok: false, error: new NotFoundError() };
+    } else {
+      return { ok: false, error: new InternalServerError() };
+    }
+  }
 }
 
-// Deletes the item with the given id from the database. Returns true if item was successfully deleted, otherwise false.
-export async function dbDeleteItemWithId(id: number): Promise<boolean> {
+// Deletes the item with the given id from the database.
+export async function dbDeleteItemWithId(id: number): Promise<Result<unknown>> {
   try {
     await client.item.delete({
       where: { id: id },
     });
-    return true;
+    return { ok: true, value: 0 };
   } catch (e) {
-    return false;
+    if (e instanceof Prisma.PrismaClientKnownRequestError) {
+      return { ok: false, error: new NotFoundError() };
+    }
+    return { ok: false, error: new InternalServerError() };
   }
 }

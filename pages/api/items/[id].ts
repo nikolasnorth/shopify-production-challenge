@@ -1,5 +1,5 @@
 import { NextApiRequest, NextApiResponse } from "next";
-import { Item } from "../../../lib/types";
+import { Item, NotFoundError } from "../../../lib/types";
 import { dbDeleteItemWithId, dbSelectItemWithId, dbUpdateItem } from "../../../repo/db/items";
 
 interface ResponseData {
@@ -10,42 +10,47 @@ interface ResponseData {
 export default async function ItemIdHandler(req: NextApiRequest, res: NextApiResponse<ResponseData>) {
   const idString = req.query.id;
   if (!idString) {
-    return res.status(400).json({
-      error: "Item ID is required.",
-    });
+    return res.status(400).json({ error: "Item id is required." });
   }
   const id = Number(idString);
 
   if (req.method == "GET") {
-    const item = await dbSelectItemWithId(id);
-    if (!item) {
-      return res.status(404).json({
-        error: `Item with 'ID: ${id}' does not exist.`,
-      });
+    const result = await dbSelectItemWithId(id);
+    if (!result.ok) {
+      return res.status(404).json({ error: result.error.message });
     }
-    return res.status(200).json({
-      item: item,
-    });
+
+    const { value: item } = result;
+    return res.status(200).json({ item });
   }
 
   if (req.method == "PUT") {
     const { name, quantity }: Partial<Item> = req.body;
     if (!name && !quantity) {
-      return res.status(400).json({
-        error: "At least one of item name or quantity are required.",
-      });
+      return res.status(400).json({ error: "At least one of item name or quantity are required." });
     }
-    const item = await dbUpdateItem({ id, name, quantity });
-    return res.status(200).json({
-      item: item,
-    });
+
+    const result = await dbUpdateItem({ id, name, quantity });
+    if (!result.ok && result.error instanceof NotFoundError) {
+      return res.status(404).json({ error: result.error.message });
+    }
+    if (!result.ok) {
+      return res.status(500).end();
+    }
+
+    const { value: item } = result;
+    return res.status(200).json({ item });
   }
 
   if (req.method == "DELETE") {
-    const isDeleted = await dbDeleteItemWithId(id);
-    if (!isDeleted) {
-      return res.status(400).end();
+    const result = await dbDeleteItemWithId(id);
+    if (!result.ok && result.error instanceof NotFoundError) {
+      return res.status(404).json({ error: result.error.message });
     }
+    if (!result.ok) {
+      return res.status(500).end();
+    }
+
     return res.status(204).end();
   }
 
