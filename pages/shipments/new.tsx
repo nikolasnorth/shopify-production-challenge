@@ -4,7 +4,7 @@ import { useState } from "react";
 import { useRouter } from "next/router";
 import Link from "next/link";
 import { apiGetItems } from "../../repo/api/items";
-import { Item } from "../../lib/types";
+import { HttpError, Item } from "../../lib/types";
 import { apiCreateShipment } from "../../repo/api/shipments";
 
 interface Props {
@@ -12,11 +12,13 @@ interface Props {
 }
 
 export async function getServerSideProps(): Promise<GetServerSidePropsResult<Props>> {
-  const result = await apiGetItems();
-  if (!result.ok) {
+  try {
+    const items = await apiGetItems();
+    return { props: { items } };
+  } catch (e) {
+    console.error(e);
     return { props: { items: [] } };
   }
-  return { props: { items: result.value } };
 }
 
 export default function NewShipmentPage(props: Props) {
@@ -90,14 +92,15 @@ export default function NewShipmentPage(props: Props) {
       alert("Shipment must contain at least one item.");
       return;
     }
-
-    const result = await apiCreateShipment(shippingItems);
-    if (!result.ok) {
-      alert(`Oops! Something went wrong. Error: ${result.error.message}`);
-      return;
+    try {
+      await apiCreateShipment(shippingItems);
+      router.push("/");
+    } catch (e) {
+      if (e instanceof HttpError || e instanceof Error) {
+        alert(`Oops! Something went wrong. Error: ${e.message}`);
+      }
+      console.error(e);
     }
-
-    router.push("/");
   }
 
   return (

@@ -3,6 +3,7 @@ import { FormEvent, useState } from "react";
 import { useRouter } from "next/router";
 import Link from "next/link";
 import { apiCreateItem } from "../../repo/api/items";
+import { HttpError } from "../../lib/types";
 
 export default function NewItemPage() {
   const router = useRouter();
@@ -15,12 +16,15 @@ export default function NewItemPage() {
       alert("Item name is required.");
       return;
     }
-    const item = await apiCreateItem({ name: itemName, quantity: itemQuantity });
-    if (!item) {
-      alert("Oops! Something went wrong. Please try again.");
-      return;
+    try {
+      await apiCreateItem({ name: itemName, quantity: itemQuantity });
+      router.push("/");
+    } catch (e) {
+      if (e instanceof HttpError || e instanceof Error) {
+        alert(`Oops! Something went wrong. Error: ${e.message}`);
+      }
+      console.error(e);
     }
-    router.push("/");
   }
 
   return (

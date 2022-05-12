@@ -4,7 +4,7 @@ import { useRouter } from "next/router";
 import { ParsedUrlQuery } from "querystring";
 import styles from "../../../styles/base.module.css";
 import Link from "next/link";
-import { Item } from "../../../lib/types";
+import { HttpError, Item } from "../../../lib/types";
 import { apiDeleteItemById, apiEditItem, apiGetItemById } from "../../../repo/api/items";
 
 interface Props {
@@ -20,17 +20,17 @@ export async function getServerSideProps(context: GetServerSidePropsContext<UrlQ
     notFound: true,
     redirect: { destination: "/", permanent: false },
   };
-  if (!context.params?.id) {
+  try {
+    const id = Number(context.params?.id);
+    if (isNaN(id)) {
+      return notFound;
+    }
+    const item = await apiGetItemById(id);
+    return { props: { item } };
+  } catch (e) {
+    console.error(e);
     return notFound;
   }
-  const id = Number(context.params.id);
-
-  const result = await apiGetItemById(id);
-  if (!result.ok) {
-    return notFound;
-  }
-
-  return { props: { item: result.value } };
 }
 
 export default function EditItem(props: Props) {
@@ -45,21 +45,26 @@ export default function EditItem(props: Props) {
       props.item.name = itemName;
     }
     props.item.quantity = itemQuantity;
-    const result = await apiEditItem(props.item);
-    if (!result.ok) {
-      alert(`Oops! Something went wrong. Error: ${result.error.message}`);
-      return;
+    try {
+      await apiEditItem(props.item);
+      router.push("/");
+    } catch (e) {
+      if (e instanceof HttpError || e instanceof Error) {
+        alert(`Oops! Something went wrong. Error: ${e.message}`);
+      }
+      console.error(e);
     }
-
-    router.push("/");
   }
 
   async function onClickDeleteItem() {
-    const isDeleted = await apiDeleteItemById(props.item.id);
-    if (!isDeleted) {
-      alert("Oops! We could not delete the item at this time. Please try again later.");
-    } else {
+    try {
+      await apiDeleteItemById(props.item.id);
       router.push("/");
+    } catch (e) {
+      if (e instanceof HttpError || e instanceof Error) {
+        alert(`Oops! Something went wrong. Error: ${e.message}`);
+      }
+      console.error(e);
     }
   }
 

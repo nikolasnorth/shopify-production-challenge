@@ -10,11 +10,13 @@ interface Props {
 }
 
 export async function getServerSideProps(): Promise<GetServerSidePropsResult<Props>> {
-  const result = await apiGetItems();
-  if (!result.ok) {
+  try {
+    const items = await apiGetItems();
+    return { props: { items } };
+  } catch (e) {
+    console.error(e);
     return { props: { items: [] } };
   }
-  return { props: { items: result.value } };
 }
 
 export default function Home({ items }: Props) {
