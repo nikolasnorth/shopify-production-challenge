@@ -36,6 +36,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
       }
     }
   } catch (e) {
+    console.error(e);
     if (e instanceof HttpError) {
       return res.status(e.code).end(e.message);
     } else {

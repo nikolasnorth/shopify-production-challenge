@@ -36,7 +36,7 @@ export async function dbUpdateItem({ id, name, quantity }: { id: number, name?: 
     if (e instanceof Prisma.PrismaClientUnknownRequestError) {
       throw new HttpError(400, "Quantity cannot be negative.");
     }
-    throw new HttpError(500, "Unknown error occurred while updating item.");
+    throw e;
   }
 }
 
@@ -48,6 +48,6 @@ export async function dbDeleteItemWithId(id: number): Promise<void> {
     if (e instanceof Prisma.PrismaClientKnownRequestError) {
       throw new HttpError(404, "Item does not exist.");
     }
-    throw new HttpError(500, "Unknown error occurred while deleting item");
+    throw e;
   }
 }

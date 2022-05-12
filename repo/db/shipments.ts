@@ -35,6 +35,6 @@ export async function dbInsertShipment(items: Item[]): Promise<number> {
     if (e instanceof Prisma.PrismaClientUnknownRequestError) {
       throw new HttpError(400, "At least one of the items have insufficient quantity.");
     }
-    throw new HttpError(500, "Unknown error occurred while creating shipment.");
+    throw e;
   }
 }

@@ -10,7 +10,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
   try {
     switch (req.method) {
       case "POST": {
-        const items: Item[] | undefined = req.body;
+        const items: Item[] | undefined = req.body.items;
         if (!items || items.length == 0) {
           return res.status(400).end("At least one shipment item is required.");
         }
@@ -23,6 +23,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
       }
     }
   } catch (e) {
+    console.error(e);
     if (e instanceof HttpError) {
       return res.status(e.code).end(e.message);
     }
