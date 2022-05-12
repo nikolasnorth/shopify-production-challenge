@@ -35,16 +35,17 @@ export async function getServerSideProps(context: GetServerSidePropsContext<UrlQ
 
 export default function EditItem(props: Props) {
   const router = useRouter();
-  const [itemName, setItemName] = useState("");
-  const [itemQuantity, setItemQuantity] = useState(0);
+  const [itemName, setItemName] = useState(props.item.name);
+  const [itemQuantity, setItemQuantity] = useState(props.item.quantity);
 
   async function onSubmitEditItem(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    // Prevent name from being an empty string
-    if (itemName) {
+    if (itemName != "" && itemName != props.item.name) {
       props.item.name = itemName;
     }
-    props.item.quantity = itemQuantity;
+    if (itemQuantity != props.item.quantity) {
+      props.item.quantity = itemQuantity;
+    }
     try {
       await apiEditItem(props.item);
       router.push("/");
