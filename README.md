@@ -33,7 +33,10 @@ Open [localhost:3000](http://localhost:3000) to view the application.
 
 ### View on Replit
 
-I have deployed the application using Replit. You can view it
+I have deployed the application using Replit. You can view the live application
 at: [https://shopify-backend-challenge.nikolasnorth.repl.co](https://shopify-backend-challenge.nikolasnorth.repl.co)
+
+The repl can be found
+at: [https://replit.com/@NikolasNorth/shopify-backend-challenge](https://replit.com/@NikolasNorth/shopify-backend-challenge)
 
 API routes can be accessed under `/api`.
