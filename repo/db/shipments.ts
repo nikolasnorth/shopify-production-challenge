@@ -27,7 +27,7 @@ export async function dbInsertShipment(items: Item[]): Promise<number> {
         select: { id: true },
       }),
     ]);
-    return result.at(-1)!.id;  // Last item in the array will be the shipment id
+    return result[result.length - 1]!.id;  // Last item in the array will be the shipment id
   } catch (e) {
     if (e instanceof Prisma.PrismaClientKnownRequestError) {
       throw new HttpError(404, "Item does not exist.");
