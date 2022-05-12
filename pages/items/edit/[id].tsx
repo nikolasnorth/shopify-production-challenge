@@ -40,16 +40,13 @@ export default function EditItem(props: Props) {
 
   async function onSubmitEditItem(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    if (itemName && itemName != props.item.name) {
+    // Prevent name from being an empty string
+    if (itemName) {
       props.item.name = itemName;
     }
-    if (itemQuantity && itemQuantity != props.item.quantity) {
-      props.item.quantity = itemQuantity;
-    }
-
+    props.item.quantity = itemQuantity;
     const result = await apiEditItem(props.item);
     if (!result.ok) {
-      console.log(result.error);
       alert(`Oops! Something went wrong. Error: ${result.error.message}`);
       return;
     }
@@ -67,9 +64,9 @@ export default function EditItem(props: Props) {
   }
 
   return (
-    <div className={styles.container}>
+    <div className={styles["container"]}>
       <Link href="/">
-        <h1 className={styles.titleLink}>Inventory Management</h1>
+        <h1 className={styles["titleLink"]}>Inventory Management</h1>
       </Link>
       <h2>Edit Item</h2>
       <form onSubmit={onSubmitEditItem}>

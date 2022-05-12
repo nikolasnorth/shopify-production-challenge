@@ -20,13 +20,13 @@ export default function NewItemPage() {
       alert("Oops! Something went wrong. Please try again.");
       return;
     }
-    await router.push("/");
+    router.push("/");
   }
 
   return (
-    <div className={styles.container}>
+    <div className={styles["container"]}>
       <Link href="/">
-        <h1 className={styles.titleLink}>Inventory Management</h1>
+        <h1 className={styles["titleLink"]}>Inventory Management</h1>
       </Link>
       <h2>Create Item</h2>
       <form onSubmit={onSubmit}>

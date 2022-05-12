@@ -42,10 +42,10 @@ export default function NewShipmentPage(props: Props) {
     if (i == -1) {
       updatedShippingItems.push({ id: item.id, name: item.name, quantity: 1 });
     } else {
-      updatedShippingItems[i].quantity += 1;
+      updatedShippingItems[i]!.quantity += 1;
     }
-    updatedAvailableItems[j].quantity -= 1;
-    if (updatedAvailableItems[j].quantity == 0) {
+    updatedAvailableItems[j]!.quantity -= 1;
+    if (updatedAvailableItems[j]!.quantity == 0) {
       // Remove item
       updatedAvailableItems.splice(j, 1);
     }
@@ -72,10 +72,10 @@ export default function NewShipmentPage(props: Props) {
     if (j == -1) {
       updatedAvailableItems.push({ id: item.id, name: item.name, quantity: 1 });
     } else {
-      updatedAvailableItems[j].quantity += 1;
+      updatedAvailableItems[j]!.quantity += 1;
     }
-    updatedShippingItems[i].quantity -= 1;
-    if (updatedShippingItems[i].quantity == 0) {
+    updatedShippingItems[i]!.quantity -= 1;
+    if (updatedShippingItems[i]!.quantity == 0) {
       // Remove item
       updatedShippingItems.splice(i, 1);
     }
@@ -101,28 +101,28 @@ export default function NewShipmentPage(props: Props) {
   }
 
   return (
-    <div className={styles.container}>
+    <div className={styles["container"]}>
       <Link href="/">
-        <h1 className={styles.titleLink}>Inventory Management</h1>
+        <h1 className={styles["titleLink"]}>Inventory Management</h1>
       </Link>
       <h2>Create Shipment</h2>
-      <div className={styles.createShipment}>
-        <div className={styles.availableItems}>
+      <div className={styles["createShipment"]}>
+        <div className={styles["availableItems"]}>
           <h3>Available items</h3>
           {
             availableItems.map(item => (
-              <div key={item.id} className={styles.itemContainer}>
+              <div key={item.id} className={styles["availableItems"]}>
                 <button onClick={() => addItemToShipment(item)}>+</button>
                 {item.name}, Quantity: {item.quantity}
               </div>
             ))
           }
         </div>
-        <div className={styles.shippingItems}>
+        <div className={styles["shippingItems"]}>
           <h3>Shipping Items</h3>
           {
             shippingItems.map(item => (
-              <div key={item.id} className={styles.itemContainer}>
+              <div key={item.id} className={styles["itemContainer"]}>
                 <button onClick={() => removeItemFromShipment(item)}>-</button>
                 {item.name}, Quantity: {item.quantity}
               </div>
