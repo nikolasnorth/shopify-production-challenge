@@ -59,10 +59,6 @@ export async function apiEditItem(item: Item): Promise<Result<Item>> {
     body: JSON.stringify(item),
   });
   if (!res.ok) {
-    const { error }: { error?: string } = await res.json();
-    if (error) {
-      return { ok: false, error: new HttpRequestFail(error) };
-    }
     return { ok: false, error: new HttpRequestFail("Failed to edit item.") };
   }
 

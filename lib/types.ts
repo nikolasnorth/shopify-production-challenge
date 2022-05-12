@@ -15,8 +15,18 @@ export interface Shipment {
 
 /// Other Types
 
+export class HttpError {
+  code: number;
+  message: string;
+
+  constructor(code: number, message?: string) {
+    this.code = code;
+    this.message = message || "";
+  }
+}
+
 // Base interface for custom error types below.
-interface CustomError {
+export interface CustomError {
   message: string;
 }
 

@@ -1,33 +1,37 @@
 import { NextApiRequest, NextApiResponse } from "next";
-import { Item } from "../../../lib/types";
+import { HttpError, Item } from "../../../lib/types";
 import { dbInsertItem, dbSelectAllItems } from "../../../repo/db/items";
 
 interface ResponseData {
   item?: Item;
   items?: Item[];
-  error?: string;
 }
 
-export default async function ItemIndexHandler(req: NextApiRequest, res: NextApiResponse<ResponseData>) {
-  if (req.method == "GET") {
-    const items = await dbSelectAllItems();
-    return res.status(200).json({
-      items: items,
-    });
-  }
-
-  if (req.method == "POST") {
-    const { name, quantity }: Pick<Item, "name" | "quantity"> = req.body;
-    if (!name || !quantity) {
-      return res.status(400).json({
-        error: "Item name and quantity are required.",
-      });
+export default async function handler(req: NextApiRequest, res: NextApiResponse<ResponseData>) {
+  try {
+    switch (req.method) {
+      case "GET": {
+        const items = await dbSelectAllItems();
+        return res.status(200).json({ items });
+      }
+      case "POST": {
+        const name: string | undefined = req.body.name;
+        const quantity = Number(req.body.quantity);
+        if (!name || isNaN(quantity)) {
+          return res.status(400).end("Item name and quantity are required.");
+        }
+        const item = await dbInsertItem({ name, quantity });
+        return res.status(201).json({ item });
+      }
+      default: {
+        res.setHeader("Allow", ["GET", "POST"]);
+        return res.status(405).end("Method not allowed.");
+      }
     }
-    const item = await dbInsertItem({ name, quantity });
-    return res.status(201).json({
-      item: item,
-    });
+  } catch (e) {
+    if (e instanceof HttpError) {
+      return res.status(e.code).end(e.message);
+    }
+    return res.status(500).end("Internal server error.");
   }
-
-  return res.status(405).end();
 }

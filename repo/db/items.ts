@@ -1,5 +1,5 @@
 import { client } from "./client";
-import { InternalServerError, Item, NotFoundError, Result } from "../../lib/types";
+import { HttpError, Item } from "../../lib/types";
 import { Prisma } from "@prisma/client";
 
 // Selects all items from the database.
@@ -8,14 +8,12 @@ export async function dbSelectAllItems(): Promise<Item[]> {
 }
 
 // Selects an item with the given id from the database.
-export async function dbSelectItemWithId(id: number): Promise<Result<Item>> {
-  const item = await client.item.findUnique({
-    where: { id: id },
-  });
+export async function dbSelectItemWithId(id: number): Promise<Item> {
+  const item = await client.item.findUnique({ where: { id: id } });
   if (!item) {
-    return { ok: false, error: new NotFoundError() };
+    throw new HttpError(404, "Item does not exist.");
   }
-  return { ok: true, value: item };
+  return item;
 }
 
 // Inserts the given item into the database.
@@ -24,34 +22,32 @@ export async function dbInsertItem(item: Pick<Item, "name" | "quantity">): Promi
 }
 
 // Updates the given item in the database.
-export async function dbUpdateItem(item: Partial<Item>): Promise<Result<Item>> {
+export async function dbUpdateItem({ id, name, quantity }: { id: number, name?: string, quantity?: number })
+  : Promise<Item> {
   try {
-    const { id, name, quantity } = item;
-    const updatedItem = await client.item.update({
+    return await client.item.update({
       where: { id: id },
       data: { name, quantity },
     });
-    return { ok: true, value: updatedItem };
   } catch (e) {
     if (e instanceof Prisma.PrismaClientKnownRequestError) {
-      return { ok: false, error: new NotFoundError() };
-    } else {
-      return { ok: false, error: new InternalServerError() };
+      throw new HttpError(404, "Item does not exist.");
     }
+    if (e instanceof Prisma.PrismaClientUnknownRequestError) {
+      throw new HttpError(400, "Quantity cannot be negative.");
+    }
+    throw new HttpError(500, "Unknown error occurred while updating item.");
   }
 }
 
 // Deletes the item with the given id from the database.
-export async function dbDeleteItemWithId(id: number): Promise<Result<unknown>> {
+export async function dbDeleteItemWithId(id: number): Promise<void> {
   try {
-    await client.item.delete({
-      where: { id: id },
-    });
-    return { ok: true, value: 0 };
+    await client.item.delete({ where: { id: id } });
   } catch (e) {
     if (e instanceof Prisma.PrismaClientKnownRequestError) {
-      return { ok: false, error: new NotFoundError() };
+      throw new HttpError(404, "Item does not exist.");
     }
-    return { ok: false, error: new InternalServerError() };
+    throw new HttpError(500, "Unknown error occurred while deleting item");
   }
 }
