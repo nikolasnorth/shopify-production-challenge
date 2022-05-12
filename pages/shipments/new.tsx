@@ -94,7 +94,7 @@ export default function NewShipmentPage(props: Props) {
     }
     try {
       await apiCreateShipment(shippingItems);
-      router.push("/");
+      await router.push("/");
     } catch (e) {
       if (e instanceof HttpError || e instanceof Error) {
         alert(`Oops! Something went wrong. Error: ${e.message}`);

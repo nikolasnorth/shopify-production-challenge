@@ -18,7 +18,7 @@ export default function NewItemPage() {
     }
     try {
       await apiCreateItem({ name: itemName, quantity: itemQuantity });
-      router.push("/");
+      await router.push("/");
     } catch (e) {
       if (e instanceof HttpError || e instanceof Error) {
         alert(`Oops! Something went wrong. Error: ${e.message}`);

@@ -48,7 +48,7 @@ export default function EditItem(props: Props) {
     }
     try {
       await apiEditItem(props.item);
-      router.push("/");
+      await router.push("/");
     } catch (e) {
       if (e instanceof HttpError || e instanceof Error) {
         alert(`Oops! Something went wrong. Error: ${e.message}`);
@@ -60,7 +60,7 @@ export default function EditItem(props: Props) {
   async function onClickDeleteItem() {
     try {
       await apiDeleteItemById(props.item.id);
-      router.push("/");
+      await router.push("/");
     } catch (e) {
       if (e instanceof HttpError || e instanceof Error) {
         alert(`Oops! Something went wrong. Error: ${e.message}`);
