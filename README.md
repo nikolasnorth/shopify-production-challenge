@@ -10,7 +10,7 @@
 
 ## Getting Started
 
-First, run the development server:
+### Local Setup
 
 ```bash
 # Install application dependencies
@@ -29,6 +29,11 @@ npm run build
 npm run start
 ```
 
-Open [https://shopify-backend-challenge.nikolasnorth.repl.co](https://shopify-backend-challenge.nikolasnorth.repl.co) to view the application.
+Open [localhost:3000](http://localhost:3000) to view the application.
+
+### View on Replit
+
+I have deployed the application using Replit. You can view it
+at: [https://shopify-backend-challenge.nikolasnorth.repl.co](https://shopify-backend-challenge.nikolasnorth.repl.co)
 
 API routes can be accessed under `/api`.
