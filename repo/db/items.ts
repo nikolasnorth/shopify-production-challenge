@@ -17,8 +17,15 @@ export async function dbSelectItemWithId(id: number): Promise<Item> {
 }
 
 // Inserts the given item into the database.
-export async function dbInsertItem(item: Pick<Item, "name" | "quantity">): Promise<Item> {
-  return await client.item.create({ data: item });
+export async function dbInsertItem(item: { name: string, quantity: number, cityId: number }): Promise<Item> {
+  const { name, quantity, cityId } = item;
+  return await client.item.create({
+    data: {
+      name: name,
+      quantity: quantity,
+      city: { connect: { id: cityId } },
+    },
+  });
 }
 
 // Updates the given item in the database.

@@ -24,10 +24,11 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
       case "POST": {
         const name: string | undefined = req.body.name;
         const quantity = Number(req.body.quantity);
-        if (!name || isNaN(quantity)) {
-          return res.status(400).end("Item name and quantity are required.");
+        const cityId = Number(req.body.cityId);
+        if (!name || isNaN(quantity) || isNaN(cityId)) {
+          return res.status(400).end("Item name, quantity, and cityId are required.");
         }
-        const item = await dbInsertItem({ name, quantity });
+        const item = await dbInsertItem({ name, quantity, cityId });
         return res.status(201).json({ item });
       }
       default: {
