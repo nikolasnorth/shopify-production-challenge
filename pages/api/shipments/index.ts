@@ -1,12 +1,19 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import { HttpError, Item, Shipment } from "../../../lib/types";
 import { dbInsertShipment } from "../../../repo/db/shipments";
+import NextCors from "nextjs-cors";
 
 interface ResponseData {
   shipment?: Pick<Shipment, "id">;
 }
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse<ResponseData>) {
+  await NextCors(req, res, {
+    methods: ["POST"],
+    origin: "*",
+    optionsSuccessStatus: 200,
+  });
+
   try {
     switch (req.method) {
       case "POST": {

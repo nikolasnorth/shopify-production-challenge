@@ -1,12 +1,19 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import { HttpError, Item } from "../../../lib/types";
 import { dbDeleteItemWithId, dbSelectItemWithId, dbUpdateItem } from "../../../repo/db/items";
+import NextCors from "nextjs-cors";
 
 interface ResponseData {
   item?: Item;
 }
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse<ResponseData>) {
+  await NextCors(req, res, {
+    methods: ["GET", "PUT", "DELETE"],
+    origin: "*",
+    optionsSuccessStatus: 200,
+  });
+
   try {
     const id = Number(req.query["id"]);
     if (isNaN(id)) {
