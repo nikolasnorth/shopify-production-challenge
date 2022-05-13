@@ -60,7 +60,8 @@ export default function Home({ items, citiesInfo }: Props) {
               <div key={item.id} className={styles["itemContainer"]}>
                 <>
                   <Link href={`/items/edit/${item.id}`}>Edit</Link>
-                  {item.name} | Quantity: {item.quantity} | City: {citiesInfoMap.get(item.cityId.toString())?.cityName},
+                  {item.name} | Quantity: {item.quantity} |
+                  City: {citiesInfoMap.get(item.cityId.toString())?.cityName} {" "}
                   | Current Weather: {citiesInfoMap.get(item.cityId.toString())?.weatherDescription}
                 </>
               </div>

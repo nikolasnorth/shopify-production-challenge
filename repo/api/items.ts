@@ -29,7 +29,7 @@ export async function apiGetItems(): Promise<Item[]> {
 }
 
 // Queries API to create a new item.
-export async function apiCreateItem(item: Pick<Item, "name" | "quantity">): Promise<Item> {
+export async function apiCreateItem(item: Pick<Item, "name" | "quantity" | "cityId">): Promise<Item> {
   const res = await fetch(`${BASE_URL}/items`, {
     method: "POST",
     headers: {
