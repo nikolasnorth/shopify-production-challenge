@@ -26,7 +26,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
         const quantity = Number(req.body.quantity);
         const cityId = Number(req.body.cityId);
         if (!name || isNaN(quantity) || isNaN(cityId)) {
-          return res.status(400).end("Item name, quantity, and cityId are required.");
+          return res.status(400).end("Item name, quantity, and city id are required.");
         }
         const item = await dbInsertItem({ name, quantity, cityId });
         return res.status(201).json({ item });
