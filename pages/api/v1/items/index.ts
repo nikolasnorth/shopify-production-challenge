@@ -1,6 +1,6 @@
 import { NextApiRequest, NextApiResponse } from "next";
-import { HttpError, Item } from "../../../lib/types";
-import { dbInsertItem, dbSelectAllItems } from "../../../repo/db/items";
+import { HttpError, Item } from "../../../../lib/types";
+import { dbInsertItem, dbSelectAllItems } from "../../../../repo/db/items";
 import NextCors from "nextjs-cors";
 
 interface ResponseData {

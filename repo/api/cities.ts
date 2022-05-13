@@ -26,7 +26,7 @@ export async function fetchCurrentWeatherDescription(openWeatherId: number): Pro
 
 // Fetches from API a list of all cities.
 export async function apiGetCities(): Promise<City[]> {
-  const res = await fetch(`${BASE_URL}/api/cities`);
+  const res = await fetch(`${BASE_URL}/cities`);
   if (!res.ok) {
     const errorMessage = await res.text();
     throw new HttpError(res.status, errorMessage || "HTTP request failed to get cities.");
@@ -41,7 +41,7 @@ export async function apiGetCities(): Promise<City[]> {
 // Fetches from API a list of all cities and the current weather for each city.
 export async function apiGetCitiesWithCurrentWeather(): Promise<(City & { weatherDescription: string })[]> {
   const params = new URLSearchParams({ weather: "now" }).toString();
-  const res = await fetch(`${BASE_URL}/api/cities?${params}`);
+  const res = await fetch(`${BASE_URL}/cities?${params}`);
   if (!res.ok) {
     const errorMessage = await res.text();
     throw new HttpError(res.status, errorMessage || "HTTP request failed to get cities.");

@@ -5,7 +5,7 @@ const BASE_URL = process.env.NODE_ENV == "production" ? config.PROD_BASE_URL : c
 
 // Queries API to retrieve an item with the given id.
 export async function apiGetItemById(id: number): Promise<Item> {
-  const res = await fetch(`${BASE_URL}/api/items/${id}`);
+  const res = await fetch(`${BASE_URL}/items/${id}`);
   if (!res.ok) {
     const errorMessage = await res.text();
     throw new HttpError(res.status, errorMessage || "HTTP request failed to get item by ID.");
@@ -19,7 +19,7 @@ export async function apiGetItemById(id: number): Promise<Item> {
 
 // Queries API to retrieve a list of items.
 export async function apiGetItems(): Promise<Item[]> {
-  const res = await fetch(`${BASE_URL}/api/items`);
+  const res = await fetch(`${BASE_URL}/items`);
   if (!res.ok) {
     const errorMessage = await res.text();
     throw new HttpError(res.status, errorMessage || "HTTP request failed to get all items.");
@@ -30,7 +30,7 @@ export async function apiGetItems(): Promise<Item[]> {
 
 // Queries API to create a new item.
 export async function apiCreateItem(item: Pick<Item, "name" | "quantity">): Promise<Item> {
-  const res = await fetch(`${BASE_URL}/api/items`, {
+  const res = await fetch(`${BASE_URL}/items`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -50,7 +50,7 @@ export async function apiCreateItem(item: Pick<Item, "name" | "quantity">): Prom
 
 // Queries API to edit the given item.
 export async function apiEditItem(item: Item): Promise<Item> {
-  const res = await fetch(`${BASE_URL}/api/items/${item.id}`, {
+  const res = await fetch(`${BASE_URL}/items/${item.id}`, {
     method: "PUT",
     headers: {
       "Content-Type": "application/json",
@@ -71,7 +71,7 @@ export async function apiEditItem(item: Item): Promise<Item> {
 // Queries API to delete the item with the given id. Returns true if the item was successfully deleted, otherwise
 // returns false.
 export async function apiDeleteItemById(id: number): Promise<boolean> {
-  const res = await fetch(`${BASE_URL}/api/items/${id}`, { method: "DELETE" });
+  const res = await fetch(`${BASE_URL}/items/${id}`, { method: "DELETE" });
   if (!res.ok) {
     const errorMessage = await res.text();
     throw new HttpError(res.status, errorMessage || "HTTP request failed to delete item by ID.");

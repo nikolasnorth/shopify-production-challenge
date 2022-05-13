@@ -5,7 +5,7 @@ const BASE_URL = process.env.NODE_ENV == "production" ? config.PROD_BASE_URL : c
 
 // Queries API to create a new shipment of the given items. Returns null if the request was unsuccessful.
 export async function apiCreateShipment(items: Item[]): Promise<number> {
-  const res = await fetch(`${BASE_URL}/api/shipments`, {
+  const res = await fetch(`${BASE_URL}/shipments`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",

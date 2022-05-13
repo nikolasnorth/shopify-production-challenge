@@ -1,8 +1,8 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import NextCors from "nextjs-cors";
-import { City, HttpError } from "../../../lib/types";
-import { dbSelectAllCities } from "../../../repo/db/cities";
-import { fetchCurrentWeatherDescription } from "../../../repo/api/cities";
+import { City, HttpError } from "../../../../lib/types";
+import { dbSelectAllCities } from "../../../../repo/db/cities";
+import { fetchCurrentWeatherDescription } from "../../../../repo/api/cities";
 
 interface ResponseData {
   cities: (City & { weatherDescription?: string })[];
