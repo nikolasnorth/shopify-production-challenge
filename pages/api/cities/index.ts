@@ -5,7 +5,7 @@ import { dbSelectAllCities } from "../../../repo/db/cities";
 import { fetchCurrentWeatherDescription } from "../../../repo/api/cities";
 
 interface ResponseData {
-  cities: City[] & { weatherDescription?: string };
+  cities: (City & { weatherDescription?: string })[];
 }
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse<ResponseData>) {

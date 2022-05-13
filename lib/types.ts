@@ -2,7 +2,7 @@ export interface Item {
   id: number;
   name: string;
   quantity: number;
-  city?: City;
+  cityId: number;
 }
 
 export interface Shipment {
