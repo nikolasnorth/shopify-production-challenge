@@ -27,10 +27,14 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
       case "PUT": {
         const name: string | undefined = req.body.name;
         const quantity = Number(req.body.quantity);
+        const cityId = Number(req.body.cityId);
         if (isNaN(quantity) || quantity < 0) {
           return res.status(400).end("Quantity must be a valid non-negative number");
         }
-        const item = await dbUpdateItem({ id, name, quantity });
+        if (isNaN(cityId) || cityId < 1 || cityId > 5) {
+          return res.status(400).end("City ID must be a valid number between 1 and 5.");
+        }
+        const item = await dbUpdateItem({ id, name, quantity, cityId });
         return res.status(200).json({ item });
       }
       case "DELETE": {

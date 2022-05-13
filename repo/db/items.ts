@@ -29,12 +29,12 @@ export async function dbInsertItem(item: { name: string, quantity: number, cityI
 }
 
 // Updates the given item in the database.
-export async function dbUpdateItem({ id, name, quantity }: { id: number, name?: string, quantity?: number })
-  : Promise<Item> {
+export async function dbUpdateItem(item: { id: number, name?: string, quantity?: number, cityId?: number }): Promise<Item> {
   try {
+    const { id, name, quantity, cityId } = item;
     return await client.item.update({
-      where: { id: id },
-      data: { name, quantity },
+      where: { id },
+      data: { name, quantity, cityId },
     });
   } catch (e) {
     if (e instanceof Prisma.PrismaClientKnownRequestError) {
