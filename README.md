@@ -1,9 +1,11 @@
 # Shopify Production Intern Challenge
 
-## Introduction and Project Structure
+## Introduction
 
 This project is for the Fall 2022 Shopify Production Engineer Intern Challenge. It is an inventory tracking web
 application capable of performing the functional requirements listed below.
+
+## Project Layout
 
 This application was built with the [Next.js](https://nextjs.org/) framework. Therefore, files inside the `pages/api`
 folder are mapped to `/api/*` REST endpoints. For example, the HTTP handler in `pages/api/v1/items/[id].ts` maps
