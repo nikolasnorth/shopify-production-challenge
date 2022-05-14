@@ -13,7 +13,10 @@ interface Props {
 
 export async function getServerSideProps(): Promise<GetServerSidePropsResult<Props>> {
   try {
-    const cities = await apiGetCities();
+    let cities = await apiGetCities();
+    // Hacky fix to ensure only 5 hardcoded cities are shown to the user. For some reason each city was duplicated in
+    // the array.
+    cities.slice(0, 5);
     return { props: { cities } };
   } catch (e) {
     console.error(e);

@@ -27,7 +27,10 @@ export async function getServerSideProps(context: GetServerSidePropsContext<UrlQ
     if (isNaN(id)) {
       return notFound;
     }
-    const [item, cities] = await Promise.all([apiGetItemById(id), apiGetCities()]);
+    let [item, cities] = await Promise.all([apiGetItemById(id), apiGetCities()]);
+    // Hacky fix to ensure only 5 hardcoded cities are shown to the user. For some reason each city was duplicated in
+    // the array.
+    cities.slice(0, 5);
     return { props: { item, cities } };
   } catch (e) {
     console.error(e);
