@@ -60,10 +60,6 @@ API routes can be accessed under `/api/v1`.
 # Install application dependencies
 npm install
 
-# Delete existing database file (if it exists).
-# This ensures primary key's for City records start from 1 when seed script is run again.
-rm prisma/dev.db
-
 # Create database, schema and run seed script.
 npx prisma migrate dev
 
