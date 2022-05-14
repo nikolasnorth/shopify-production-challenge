@@ -42,7 +42,7 @@ export default function NewShipmentPage(props: Props) {
 
     // Add item to shipment
     if (i == -1) {
-      updatedShippingItems.push({ id: item.id, name: item.name, quantity: 1 });
+      updatedShippingItems.push({ id: item.id, name: item.name, quantity: 1, cityId: item.cityId });
     } else {
       updatedShippingItems[i]!.quantity += 1;
     }
@@ -72,7 +72,7 @@ export default function NewShipmentPage(props: Props) {
 
     // Remove item from shipment
     if (j == -1) {
-      updatedAvailableItems.push({ id: item.id, name: item.name, quantity: 1 });
+      updatedAvailableItems.push({ id: item.id, name: item.name, quantity: 1, cityId: item.cityId });
     } else {
       updatedAvailableItems[j]!.quantity += 1;
     }
