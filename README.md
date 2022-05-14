@@ -64,11 +64,8 @@ npm install
 # This ensures primary key's for City records start from 1 when seed script is run again.
 rm prisma/dev.db
 
-# Create database and schema
+# Create database, schema and run seed script.
 npx prisma migrate dev
-
-# Seed database
-npx prisma db seed
 
 # Build application
 npm run build
